@@ -1,0 +1,443 @@
+/* ==========================================================================
+   SamenOntzorgen — design system
+   "Zwart op wit": editorial rust, degelijke helderheid, warm-zakelijk.
+   Logokleuren (#d92536 rood / #19ada7 teal) zijn de enige merkkleuren.
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* merk */
+  --teal:       #19ada7;   /* logo-teal — identiteit, accenten */
+  --teal-deep:  #0e7c76;   /* interactief: links, knoppen (toegankelijk contrast) */
+  --teal-ink:   #0a5a56;
+  --teal-wash:  #e9f5f4;
+  --red:        #d92536;   /* logo-rood — spaarzaam: het probleem, de marge */
+  --red-wash:   #fbecee;
+
+  /* fundament */
+  --ink:        #1c2b2d;   /* donkere banden, koppen */
+  --ink-2:      #263a3c;
+  --paper:      #fbfaf7;   /* warm papierwit */
+  --surface:    #f3f0ea;   /* zand — rustvlakken */
+  --card:       #ffffff;
+  --line:       #e4e0d6;
+  --line-strong:#cfc9bb;
+  --text:       #26322f;
+  --muted:      #5d6763;
+  --on-ink:     #f4f2ec;
+  --on-ink-dim: rgba(244,242,236,.72);
+
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, sans-serif;
+
+  --radius:     10px;
+  --shadow:     0 1px 2px rgba(28,43,45,.05), 0 8px 32px rgba(28,43,45,.06);
+  --transition: .2s ease;
+
+  /* compat met oudere paginastijlen */
+  --primary:    #1c2b2d;
+  --accent:     #0e7c76;
+  --pink:       #d92536;
+  --logo-pink:  #d92536;
+  --pink-light: rgba(217,37,54,.08);
+  --bg:         #fbfaf7;
+  --light:      #f3f0ea;
+  --white:      #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--text);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+::selection { background: var(--teal-wash); }
+
+/* ── CONTAINER ── */
+.container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+.container--narrow { max-width: 780px; }
+
+/* ── TYPOGRAFIE ── */
+h1, h2, h3, .section-title {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  font-weight: 600;
+}
+h1 { font-size: clamp(2.3rem, 5vw, 3.5rem); line-height: 1.1; letter-spacing: -.015em; }
+h2 { font-size: clamp(1.65rem, 3.2vw, 2.35rem); line-height: 1.18; letter-spacing: -.01em; }
+h3 { font-size: 1.25rem; line-height: 1.35; }
+p  { font-size: 1.03rem; }
+.lede { font-size: clamp(1.08rem, 1.6vw, 1.22rem); line-height: 1.65; color: var(--muted); }
+strong { color: var(--ink); font-weight: 600; }
+
+/* ── KNOPPEN ── */
+.btn {
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: .98rem;
+  line-height: 1.3;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--teal-deep); color: #fff; }
+.btn-primary:hover { background: var(--teal-ink); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-secondary:hover { border-color: var(--ink); }
+.btn-outline { background: transparent; color: var(--on-ink); border-color: rgba(244,242,236,.4); }
+.btn-outline:hover { border-color: var(--on-ink); }
+.btn-ghost { background: none; border: none; color: var(--teal-deep); font-weight: 600; padding: 15px 6px; }
+.btn-ghost:hover { color: var(--teal-ink); transform: none; text-decoration: underline; text-underline-offset: 4px; }
+
+.link-arrow { color: var(--teal-deep); font-weight: 600; }
+.link-arrow:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ── NAVBAR ─────────────────────────────────────────────
+   Logo ruim links, navigatie rechts — met lucht ertussen. */
+.navbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 100;
+}
+.navbar .container {
+  max-width: none;                        /* header loopt breder dan content */
+  display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(24px, 5vw, 80px);
+  padding: 14px clamp(20px, 3vw, 44px);
+}
+.site-logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; }
+.site-logo-img { display: block; height: 66px; width: auto; }
+.nav-links { display: flex; gap: clamp(18px, 2.2vw, 34px); list-style: none; align-items: center; }
+.nav-links a { font-weight: 500; font-size: .96rem; color: var(--text); transition: color var(--transition); }
+.nav-links a:hover { color: var(--teal-deep); }
+.nav-links a[aria-current="page"] { color: var(--teal-deep); font-weight: 600; }
+.nav-links .btn { padding: 11px 22px; }
+.nav-links .btn:hover { color: #fff; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; }
+.nav-toggle span { width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: var(--transition); }
+
+/* ── EYEBROW / SECTIELABEL ── */
+.section-label {
+  font-family: var(--font-sans);
+  text-transform: uppercase; letter-spacing: .14em;
+  font-size: .76rem; font-weight: 600;
+  color: var(--teal-deep); margin-bottom: 14px;
+}
+
+/* ── HOMEPAGE HERO — licht, editorial, bewijs naast belofte ── */
+.hero { background: var(--paper); padding: clamp(64px, 8vw, 112px) 0 clamp(56px, 7vw, 96px); }
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(40px, 6vw, 88px); align-items: center;
+}
+.hero h1 { margin-bottom: 22px; }
+.hero .lede { max-width: 34em; margin-bottom: 36px; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.hero-note { margin-top: 18px; font-size: .88rem; color: var(--muted); }
+
+/* ── PGB-INSTAPPUNT OP DE HOMEPAGE ── */
+.pgb-banner {
+  background: var(--teal-wash);
+  border-block: 1px solid var(--line);
+  padding: 28px 0;
+}
+.pgb-banner .container {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px 32px; flex-wrap: wrap;
+}
+.pgb-banner p { font-size: 1.12rem; color: var(--teal-ink); max-width: 34em; }
+.pgb-banner p strong { color: var(--teal-ink); }
+.pgb-banner .btn { flex-shrink: 0; }
+
+/* ── PAGE HERO — donkere inktband voor subpagina's ── */
+.page-hero {
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: clamp(64px, 8vw, 104px) 0 clamp(52px, 6vw, 84px);
+}
+.page-hero h1 { color: var(--on-ink); margin-bottom: 20px; max-width: 16em; }
+.page-hero p { font-size: 1.12rem; max-width: 38em; color: var(--on-ink-dim); }
+.page-hero .section-label { color: var(--teal); }
+.page-hero .hero-cta { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+.page-hero strong { color: var(--on-ink); }
+
+/* ── SECTIES ── */
+section { padding: clamp(64px, 8vw, 108px) 0; }
+.section-title { margin-bottom: 18px; }
+.section-sub { font-size: 1.08rem; max-width: 40em; color: var(--muted); }
+.section-header { margin-bottom: clamp(36px, 5vw, 56px); }
+.text-center { text-align: center; }
+.text-center .section-sub { margin-left: auto; margin-right: auto; }
+.bg-light { background: var(--surface); }
+
+/* ── DONKERE BAND (model / afsluiting) ── */
+.band-ink, .cooperatie, .closing-block { background: var(--ink); color: var(--on-ink-dim); }
+.band-ink .section-title, .cooperatie .section-title, .closing-block .section-title,
+.band-ink h2, .cooperatie h2, .closing-block h2,
+.band-ink h3, .cooperatie h3, .closing-block h3 { color: var(--on-ink); }
+.band-ink .section-label, .cooperatie .section-label, .closing-block .section-label { color: var(--teal); }
+.band-ink .section-sub, .cooperatie .section-sub, .closing-block p { color: var(--on-ink-dim); }
+.band-ink strong, .cooperatie strong, .closing-block strong { color: var(--on-ink); }
+.cooperatie blockquote, .band-ink blockquote {
+  border-left: 3px solid var(--teal);
+  padding-left: 24px; margin: 40px 0 0;
+  font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.5;
+  color: var(--on-ink);
+}
+
+/* ── BEWIJSKAART — "zwart op wit", als een afgestempelde rekening ── */
+.receipt {
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.receipt-head {
+  padding: 18px 26px 15px;
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+}
+.receipt-title { font-family: var(--font-sans); font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.receipt-stamp {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--teal-deep); border: 1.5px solid var(--teal-deep);
+  padding: 3px 9px; border-radius: 4px; white-space: nowrap;
+}
+.receipt-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 15px 26px; border-bottom: 1px dashed var(--line);
+}
+.receipt-row .r-label { color: var(--muted); font-size: .97rem; }
+.receipt-row .r-label strong { display: block; color: var(--ink); font-size: 1rem; }
+.receipt-row .r-value { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.receipt-row.is-bureau .r-value { color: var(--red); }
+.receipt-total {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 18px 26px; background: var(--teal-wash);
+}
+.receipt-total .r-label { font-weight: 600; color: var(--teal-ink); }
+.receipt-total .r-value { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--teal-ink); }
+.receipt-foot { padding: 13px 26px 16px; font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); }
+.receipt-foot a { color: var(--teal-deep); font-weight: 600; }
+
+/* ── CIJFERSTRIP ── */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+.stat { background: var(--paper); padding: 34px clamp(20px, 3vw, 40px); }
+.stat-value { font-family: var(--font-serif); font-size: clamp(1.9rem, 3vw, 2.5rem); font-weight: 700; color: var(--ink); line-height: 1.1; }
+.stat-label { margin-top: 10px; font-size: .93rem; color: var(--muted); max-width: 22em; }
+
+/* ── GENUMMERDE EDITORIAL LIJST (i.p.v. icon-cirkels) ── */
+.num-list { list-style: none; counter-reset: num; display: flex; flex-direction: column; }
+.num-list > li {
+  counter-increment: num;
+  display: grid; grid-template-columns: 64px 1fr; gap: clamp(16px, 3vw, 36px);
+  padding: 26px 0; border-top: 1px solid var(--line);
+}
+.num-list > li:last-child { border-bottom: 1px solid var(--line); }
+.num-list > li::before {
+  content: counter(num, decimal-leading-zero);
+  font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600;
+  color: var(--line-strong); line-height: 1.2; padding-top: 2px;
+}
+.num-list h3 { margin-bottom: 6px; font-size: 1.15rem; }
+.num-list p { color: var(--muted); font-size: 1rem; max-width: 46em; }
+.band-ink .num-list > li, .cooperatie .num-list > li { border-color: rgba(244,242,236,.16); }
+.band-ink .num-list > li::before, .cooperatie .num-list > li::before { color: var(--teal); }
+.band-ink .num-list p, .cooperatie .num-list p { color: var(--on-ink-dim); }
+
+/* ── DEFINITIELIJST: term links, uitleg rechts ── */
+.def-list { display: flex; flex-direction: column; }
+.def-row {
+  display: grid; grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: clamp(16px, 4vw, 56px);
+  padding: 24px 0; border-top: 1px solid var(--line);
+}
+.def-row:last-child { border-bottom: 1px solid var(--line); }
+.def-row dt { font-family: var(--font-serif); font-weight: 600; font-size: 1.12rem; color: var(--ink); }
+.def-row dd { color: var(--muted); font-size: 1rem; max-width: 48em; }
+.band-ink .def-row, .cooperatie .def-row { border-color: rgba(244,242,236,.16); }
+.band-ink .def-row dt, .cooperatie .def-row dt { color: var(--on-ink); }
+.band-ink .def-row dd, .cooperatie .def-row dd { color: var(--on-ink-dim); }
+.band-ink .def-row dd a, .cooperatie .def-row dd a { color: var(--teal); font-weight: 600; }
+
+/* ── DOELGROEP-PADEN ── */
+.paths { display: flex; flex-direction: column; }
+.path {
+  display: grid; grid-template-columns: minmax(160px, 240px) 1fr auto;
+  gap: clamp(16px, 4vw, 48px); align-items: center;
+  padding: 30px 0; border-top: 1px solid var(--line);
+  transition: background var(--transition);
+}
+.path:last-child { border-bottom: 1px solid var(--line); }
+.path h3 { font-size: 1.28rem; }
+.path p { color: var(--muted); font-size: .99rem; max-width: 44em; }
+.path .path-go {
+  font-family: var(--font-serif); font-size: 1.5rem; color: var(--line-strong);
+  transition: color var(--transition), transform var(--transition);
+}
+.path:hover .path-go { color: var(--teal-deep); transform: translateX(4px); }
+.path:hover h3 { color: var(--teal-deep); }
+
+/* ── STAPPEN ── */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 48px; }
+.step { background: var(--card); padding: 36px 30px; text-align: left; }
+.step-number {
+  width: auto; height: auto; border-radius: 0; background: none; margin: 0 0 14px;
+  font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--teal-deep);
+  display: block;
+}
+.step-number::after { content: ""; display: block; width: 28px; height: 2px; background: var(--teal); margin-top: 10px; }
+.step h3 { margin-bottom: 8px; font-size: 1.15rem; }
+.step p { color: var(--muted); font-size: .98rem; }
+
+/* ── ICON-LIJSTEN (compat) ── */
+.icon-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.icon-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 1.02rem; }
+.icon-list li svg { flex-shrink: 0; width: 20px; height: 20px; margin-top: 4px; }
+.list-pain svg    { stroke: var(--red); }
+.list-promise svg { stroke: var(--teal-deep); }
+
+/* ── CHECKLIJST ── */
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.check-list li { position: relative; padding-left: 36px; font-size: 1.02rem; color: var(--muted); }
+.check-list li::before {
+  content: ""; position: absolute; left: 0; top: 5px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--teal-wash);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e7c76' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+  background-size: 11px; background-position: center; background-repeat: no-repeat;
+}
+.band-ink .check-list li { color: var(--on-ink-dim); }
+
+/* ── PIJN-LIJST (streepje, geen alarm) ── */
+.dash-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.dash-list li { position: relative; padding-left: 36px; font-size: 1.02rem; color: var(--muted); }
+.dash-list li::before { content: ""; position: absolute; left: 0; top: 13px; width: 14px; height: 2px; background: var(--red); }
+
+/* ── TWEELUIK: niets doen vs. meedoen ── */
+.choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+.choice-card { border-radius: var(--radius); padding: 34px 32px; border: 1px solid var(--line); background: var(--card); }
+.choice-card h3 { margin-bottom: 12px; font-size: 1.18rem; }
+.choice-card p { color: var(--muted); font-size: 1rem; }
+.choice-card.is-fail { border-top: 3px solid var(--red); }
+.choice-card.is-fail h3 { color: var(--red); }
+.choice-card.is-win { border-top: 3px solid var(--teal); background: var(--card); }
+.choice-card.is-win h3 { color: var(--teal-ink); }
+
+/* ── KAARTEN (compat, ge-herstyled: geen zwevende schaduwblokken) ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: clamp(20px, 3vw, 32px); }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 36px 32px; display: flex; flex-direction: column;
+  transition: border-color var(--transition);
+}
+.card:hover { border-color: var(--teal); }
+.card-icon { width: 44px; height: 44px; border-radius: 8px; background: var(--teal-wash); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.card-icon svg { width: 22px; height: 22px; stroke: var(--teal-deep); }
+.card h3 { margin-bottom: 10px; }
+.card p  { flex: 1; margin-bottom: 22px; color: var(--muted); font-size: .99rem; }
+.card .btn { align-self: flex-start; }
+
+/* ── FAQ ── */
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+  padding: 20px 0; font-family: var(--font-serif); font-weight: 600; font-size: 1.1rem; color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-serif); font-size: 1.4rem; color: var(--teal-deep); line-height: 1; transition: transform var(--transition); }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { padding: 0 0 22px; color: var(--muted); max-width: 46em; }
+.faq details a { color: var(--teal-deep); font-weight: 600; }
+
+/* ── CTA-STRIP ── */
+.cta-strip { background: var(--surface); border-top: 1px solid var(--line); padding: clamp(64px, 8vw, 96px) 0; text-align: center; }
+.cta-strip h2 { margin-bottom: 14px; }
+.cta-strip p  { font-size: 1.05rem; margin: 0 auto 34px; max-width: 36em; color: var(--muted); }
+.cta-strip .hero-cta, .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ── CONTACT / FORMULIEREN ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 72px); align-items: start; }
+.contact-info { display: flex; flex-direction: column; gap: 28px; }
+.contact-info-item { display: flex; gap: 16px; align-items: flex-start; }
+.contact-info-item svg { width: 22px; height: 22px; stroke: var(--teal-deep); flex-shrink: 0; margin-top: 4px; }
+.form-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(28px, 4vw, 46px); }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 500; margin-bottom: 6px; font-size: .93rem; color: var(--ink); }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 13px 16px; border: 1.5px solid var(--line-strong); border-radius: 8px;
+  font-family: inherit; font-size: 1rem; background: var(--paper); color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--teal-deep); box-shadow: 0 0 0 3px var(--teal-wash); }
+.form-group textarea { resize: vertical; min-height: 130px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-status { margin-top: 16px; padding: 12px 16px; border-radius: 8px; font-weight: 500; display: none; }
+.form-status.success { background: var(--teal-wash); color: var(--teal-ink); display: block; }
+.form-status.error   { background: var(--red-wash); color: var(--red); display: block; }
+
+/* ── FOOTER ── */
+footer, .footer { background: var(--ink); color: var(--on-ink-dim); padding: clamp(48px, 6vw, 72px) 0 32px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(32px, 5vw, 64px); margin-bottom: 48px; }
+.footer-brand { margin-bottom: 14px; }
+.footer-brand img { background: var(--paper); padding: 10px 14px; border-radius: 8px; height: 60px !important; width: auto; }
+.footer-tagline { font-size: .97rem; max-width: 26em; }
+.footer-col h3 { color: var(--on-ink); font-family: var(--font-serif); }
+.footer-col h4 { color: var(--on-ink); margin-bottom: 16px; font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; font-family: var(--font-sans); font-weight: 600; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a { font-size: .95rem; transition: color var(--transition); }
+.footer-col ul a:hover { color: var(--teal); }
+.footer-bottom { border-top: 1px solid rgba(244,242,236,.14); padding-top: 24px; font-size: .85rem; text-align: center; color: rgba(244,242,236,.5); }
+
+/* ── PROSE (compat) ── */
+.prose a { color: var(--teal-deep); font-weight: 600; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+  .path { grid-template-columns: 1fr; gap: 8px; }
+  .path .path-go { display: none; }
+  .def-row { grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
+  .choice-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  section { padding: 56px 0; }
+  .navbar .container { padding: 10px 20px; }
+  .site-logo-img { height: 56px; }
+  .nav-links {
+    display: none; flex-direction: column; align-items: stretch; gap: 0;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow); padding: 8px 0 16px;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { padding: 10px 24px; }
+  .nav-links .btn { margin: 8px 24px 0; text-align: center; }
+  .nav-toggle { display: flex; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero { padding: 56px 0 48px; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { text-align: center; }
+  .num-list > li { grid-template-columns: 44px 1fr; padding: 20px 0; }
+  .receipt-row, .receipt-total, .receipt-head, .receipt-foot { padding-left: 20px; padding-right: 20px; }
+  .zorginstellingen-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .site-logo-img { height: 50px; }
+}

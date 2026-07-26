@@ -1,0 +1,19 @@
+{
+  "name": "zzp-gratis-lid-landingspagina",
+  "version": "1.0.0",
+  "description": "Standalone landingspagina 'Word gratis lid' voor zzp'ers in de zorg (SamenOntzorgen)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo \"Geen buildstap nodig\"",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13"
+  }
+}
