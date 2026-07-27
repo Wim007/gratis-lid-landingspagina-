@@ -6,7 +6,8 @@ hoofdsite (`samenontzorgen-website`), zodat teksten en aanbod hier apart en snel
 aangepast kunnen worden zonder de site te raken.
 
 Klein Express-projectje met dezelfde huisstijl als de hoofdsite. Het formulier
-mailt de aanmelding via nodemailer naar `info@samenontzorgen.nl`.
+mailt de aanmelding via Resend naar `info@samenontzorgen.nl`, precies zoals de
+bestaande zzp- en pgb-landingspagina.
 
 ## Structuur
 
@@ -21,16 +22,16 @@ toont de pagina automatisch een nette placeholder met de tekst "Foto van Wim".
 
 ```
 npm install
-EMAIL_USER=... EMAIL_PASS=... node server.js
+RESEND_API_KEY=re_... node server.js
 ```
 
 Daarna: http://localhost:3000
 
 ## Omgevingsvariabelen
 
-- `EMAIL_USER` — Gmail-account dat de mail verstuurt
-- `EMAIL_PASS` — Gmail app-wachtwoord
+- `RESEND_API_KEY` — API-sleutel van het Resend-account (begint met `re_`)
 - `MAIL_TO` — optioneel, standaard `info@samenontzorgen.nl`
+- `MAIL_FROM` — optioneel, standaard `SamenOntzorgen <onboarding@resend.dev>`
 
 ## Deployen (Railway)
 
@@ -40,4 +41,4 @@ een push naar `main`.
 - Root Directory: `/` (repo-root)
 - Build: nixpacks (automatisch)
 - Start Command: `node server.js`
-- Variabelen: `EMAIL_USER`, `EMAIL_PASS`, optioneel `MAIL_TO`
+- Variabelen: `RESEND_API_KEY`, optioneel `MAIL_TO` en `MAIL_FROM`
